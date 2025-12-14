@@ -16,12 +16,13 @@ module.exports = {
     'react-refresh'
   ],
   rules: {
+    // react
     'react-refresh/only-export-components': 'warn',
     'react-hooks/rules-of-hooks': 'error',
     'react-hooks/exhaustive-deps': 'warn',
     'react/prop-types': 0,
     'react/display-name': 0,
-
+    // comon
     'no-console': 1,
     'no-lonely-if': 1,
     'no-unused-vars': 1,
