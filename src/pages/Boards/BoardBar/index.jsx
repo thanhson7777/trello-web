@@ -1,15 +1,148 @@
 import Box from '@mui/material/Box'
+import Chip from '@mui/material/Chip'
+import DashboardIcon from '@mui/icons-material/Dashboard'
+import VpnLockIcon from '@mui/icons-material/VpnLock'
+import AddToDriveIcon from '@mui/icons-material/AddToDrive'
+import BoltIcon from '@mui/icons-material/Bolt'
+import FilterListIcon from '@mui/icons-material/FilterList'
+import AvatarGroup from '@mui/material/AvatarGroup'
+import Avatar from '@mui/material/Avatar'
+import Tooltip from '@mui/material/Tooltip'
+import Button from '@mui/material/Button'
+import PersonAddIcon from '@mui/icons-material/PersonAdd'
+
+const CHIP_STYLE = {
+  color: 'primary.main',
+  background: 'white',
+  border: 'none',
+  paddingX: '5px',
+  borderRadius: '4px',
+  '& .MuiSvgIcon-root': {
+    color: 'primary.main'
+  },
+  '&:hover': {
+    bgcolor: 'primary.50'
+  }
+}
 
 function BoardBar() {
   return (
     <Box sx={{
-      backgroundColor: 'primary.dark',
       width: '100%',
       height: (theme) => theme.trello.boardBarHeight,
       display: 'flex',
-      alignItems: 'center'
+      alignItems: 'center',
+      justifyContent: 'space-between',
+      gap: 2,
+      overflowX: 'auto',
+      borderTop: '1px solid #00bfa5',
+      paddingX: 2
     }}>
-      Board Bar
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Chip
+          sx={CHIP_STYLE}
+          icon={<DashboardIcon />}
+          label="Trello Web of Son"
+          clickable
+        />
+        <Chip
+          sx={CHIP_STYLE}
+          icon={<VpnLockIcon />}
+          label="Public/Private workspaces"
+          clickable
+        />
+        <Chip
+          sx={CHIP_STYLE}
+          icon={<AddToDriveIcon />}
+          label="Add to Google Drive"
+          clickable
+        />
+        <Chip
+          sx={CHIP_STYLE}
+          icon={<BoltIcon />}
+          label="Automation"
+          clickable
+        />
+        <Chip
+          sx={CHIP_STYLE}
+          icon={<FilterListIcon />}
+          label="Filters"
+          clickable
+        />
+      </Box>
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+        <Button
+          variant="outlined"
+          startIcon={<PersonAddIcon />}
+        >
+          Invite
+        </Button>
+        <AvatarGroup
+          max={5}
+          sx={{
+            '& .MuiAvatar-root': {
+              width: 34,
+              height: 34,
+              fontSize: 16
+            }
+          }}
+        >
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+          <Tooltip title="thanhson">
+            <Avatar
+              alt="son"
+              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
+            />
+          </Tooltip>
+        </AvatarGroup>
+      </Box>
     </Box>
   )
 }
