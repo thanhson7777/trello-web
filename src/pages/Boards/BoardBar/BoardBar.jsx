@@ -10,6 +10,7 @@ import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
+import { capitalizeFirstLetter } from '~/utils/formatters'
 
 const CHIP_STYLE = {
   color: 'white',
@@ -25,7 +26,7 @@ const CHIP_STYLE = {
   }
 }
 
-function BoardBar() {
+function BoardBar({ board }) { //Nhận vào object destructuring đã được truyền vào ở Board dạng prop
   return (
     <Box sx={{
       width: '100%',
@@ -43,13 +44,13 @@ function BoardBar() {
         <Chip
           sx={CHIP_STYLE}
           icon={<DashboardIcon />}
-          label="Trello Web of Son"
+          label={board?.title}
           clickable
         />
         <Chip
           sx={CHIP_STYLE}
           icon={<VpnLockIcon />}
-          label="Public/Private workspaces"
+          label={capitalizeFirstLetter(board?.type)}
           clickable
         />
         <Chip
