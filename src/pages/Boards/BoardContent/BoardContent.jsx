@@ -14,15 +14,16 @@ import {
   DragOverlay,
   defaultDropAnimationSideEffects,
   closestCorners,
-  closestCenter,
+  // closestCenter,
   pointerWithin,
-  rectIntersection,
+  // rectIntersection,
   getFirstCollision
 } from '@dnd-kit/core'
 import { arrayMove } from '@dnd-kit/sortable'
 import { useEffect, useState, useCallback } from 'react'
-import { cloneDeep } from 'lodash'
+import { cloneDeep, isEmpty } from 'lodash'
 import { useRef } from 'react'
+import { generatePlaceholderCard } from '~/utils/formatters'
 
 const ACTIVE_DRAG_ITEM_TYPE = {
   COLUMN: 'ACTIVE_DRAG_ITEM_STYLE_COLUMN',
@@ -95,6 +96,13 @@ function BoardContent({ board }) {
       if (nextActiveColumn) {
         // Xóa card ở active column (tức là khi kéo card ra khỏi column cũ thì card ở column cũ sẽ xóa đi, để nó cập nhật ở column khác)
         nextActiveColumn.cards = nextActiveColumn.cards.filter(card => card._id !== activeDraggingCardId)
+
+        // Thêm card placeholder nếu column rỗng: bị kéo hết card
+        if (isEmpty(nextActiveColumn.cards)) {
+          // console.log('Card cuoi cung bi keo di')
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)]
+        }
+
         // Cập nhật lại mảng cardOrderIds cho chuẩn dữ liệu
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(card => card._id)
       }
@@ -114,11 +122,15 @@ function BoardContent({ board }) {
 
         // Tiếp theo là thêm card đang kéo vào vị trí column mới
         nextOverColumn.cards = nextOverColumn.cards.toSpliced(newCardIndex, 0, rebuild_activeDraggingCardData)
+
+        // Xóa placeholderCard đi nếu nó tồn tại
+        nextOverColumn.cards = nextOverColumn.cards.filter(card => !card.FE_PlaceholderCard)
+
         // Cập nhật lại mảng cardOrderIds cho chuẩn dữ liệu
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(card => card._id)
       }
-      // console.log('nextColumns: ', nextColumns)
-
+      console.log('cards: ', nextOverColumn?.cards)
+      console.log('nextColumns: ', nextColumns)
       return nextColumns
     })
   }
@@ -327,9 +339,9 @@ function BoardContent({ board }) {
         overId = closestCorners({
           ...args,
           droppableContainers: args.droppableContainers.filter(container => {
-            return (container.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
+            return (container?.id !== overId) && (checkColumn?.cardOrderIds?.includes(container.id))
           })
-        })[0].id
+        })[0]?.id
         // console.log('overId after: ', overId)
       }
 
