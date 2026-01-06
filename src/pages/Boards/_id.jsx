@@ -10,7 +10,7 @@ function Board() {
   const [board, setBoard] = useState(null)
   useEffect(() => {
     // fix cứng
-    const boardId = '695b86394e8a64af1f02da6f'
+    const boardId = '695cdc644d31db131a8fd200'
     // Gọi api
     fetchBoardDetailsAPI(boardId).then(board => {
       setBoard(board)
