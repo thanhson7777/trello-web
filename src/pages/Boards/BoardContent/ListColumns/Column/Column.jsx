@@ -17,6 +17,7 @@ import Button from '@mui/material/Button'
 import DragHandleIcon from '@mui/icons-material/DragHandle'
 import TextField from '@mui/material/TextField'
 import CloseIcon from '@mui/icons-material/Close'
+import { toast } from 'react-toastify'
 
 import { useState } from 'react'
 import ListCards from './ListCards/ListCards'
@@ -54,7 +55,7 @@ function Column({ column }) {
   const [newCardTitle, setNewCardTitle] = useState('')
   const addNewCard = () => {
     if (!newCardTitle) {
-      // console.error('Please enter Card title')
+      toast.error('Please enter Card title', { position: 'bottom-right' })
       return
     }
     // console.log(newCardTitle)
