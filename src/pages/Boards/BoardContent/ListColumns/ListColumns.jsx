@@ -9,18 +9,24 @@ import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
 
 
-function ListColumns({ columns }) {
+function ListColumns({ columns, createNewColumn, createNewCard }) {
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter column title')
       return
     }
     // console.log(newColumnTitle)
-    // Gọi API
+
+    // Tạo dữ liệu column để gọi API
+    const newColumnData = {
+      title: newColumnTitle
+    }
+
+    await createNewColumn(newColumnData)
 
     // Đóng trạng thái thêm column mới và clear input
     toggleOpenNewColumnForm()
@@ -31,7 +37,7 @@ function ListColumns({ columns }) {
   * Nếu không đúng vẫn có thể kéo thả được, tuy nhiên sẽ không hiện animation
   */
   return (
-    <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy}>
+    <SortableContext items={columns?.map(c => c._id)} strategy={horizontalListSortingStrategy} >
       <Box sx={{
         bgcolor: 'inherit',
         width: '100%',
@@ -41,7 +47,7 @@ function ListColumns({ columns }) {
         overflowY: 'hidden',
         '&::-webkit-scrollbar-track': { m: 2 }
       }}>
-        {columns?.map(column => <Column key={column._id} column={column} />)}
+        {columns?.map(column => <Column key={column._id} column={column} createNewCard={createNewCard} />)}
 
         {/* Box add new column */}
         {!openNewColumnForm
