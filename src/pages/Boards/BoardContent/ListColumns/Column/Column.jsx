@@ -21,7 +21,6 @@ import { toast } from 'react-toastify'
 
 import { useState } from 'react'
 import ListCards from './ListCards/ListCards'
-import { mapOrder } from '~/utils/sorts'
 
 import { useSortable } from '@dnd-kit/sortable'
 import { CSS } from '@dnd-kit/utilities'
@@ -47,13 +46,13 @@ function Column({ column, createNewCard }) {
   const handleClick = (event) => setAnchorEl(event.currentTarget)
   const handleClose = () => setAnchorEl(null)
   // Thuật toán sắp xếp
-  const orderedCard = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+  const orderedCard = column.cards
 
   const [openNewCardForm, setOpenNewCardForm] = useState(false)
   const toggleOpenNewCardForm = () => setOpenNewCardForm(!openNewCardForm)
 
   const [newCardTitle, setNewCardTitle] = useState('')
-  const addNewCard = async () => {
+  const addNewCard = () => {
     if (!newCardTitle) {
       toast.error('Please enter Card title', { position: 'bottom-right' })
       return
@@ -65,7 +64,7 @@ function Column({ column, createNewCard }) {
       columnId: column._id
     }
 
-    await createNewCard(newCardData)
+    createNewCard(newCardData)
 
     // Đóng trạng thái thêm Card mới và clear input
     toggleOpenNewCardForm()
