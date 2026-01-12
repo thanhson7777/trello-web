@@ -8,6 +8,7 @@ import CircularProgress from '@mui/material/CircularProgress'
 import { Typography } from '@mui/material'
 // import { mockData } from '~/apis/mock-data'
 import { mapOrder } from '~/utils/sorts'
+import { toast } from 'react-toastify'
 
 import {
   fetchBoardDetailsAPI,
@@ -15,7 +16,8 @@ import {
   createNewCardAPI,
   updateBoardDetailsAPI,
   updateColumnDetailsAPI,
-  moveCardToDifferentColumnAPI
+  moveCardToDifferentColumnAPI,
+  deleteColumnDetailsAPI
 } from '~/apis'
 import { generatePlaceholderCard } from '~/utils/formatters'
 import { isEmpty } from 'lodash'
@@ -136,6 +138,20 @@ function Board() {
     })
   }
 
+  // Xử lí xóa column và cards bên trong columns đó
+  const deleteColumnDetails = (columnId) => {
+    // Cập nhật lại cho chuẩn dữ liệu state board
+    const newBoard = { ...board }
+    newBoard.columns = newBoard.columns.filter(c => c._id !== columnId)
+    newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+    setBoard(newBoard)
+
+    // Gọi API xử lí phía backend
+    deleteColumnDetailsAPI(columnId).then(res => {
+      toast.success(res?.deleteResult)
+    })
+  }
+
   if (!board) {
     return (
       <Box sx={{
@@ -164,6 +180,7 @@ function Board() {
         moveColumns={moveColumns}
         moveCardInTheSameColumn={moveCardInTheSameColumn}
         moveCardToDifferentColumn={moveCardToDifferentColumn}
+        deleteColumnDetails={deleteColumnDetails}
       />
     </Container>
   )
