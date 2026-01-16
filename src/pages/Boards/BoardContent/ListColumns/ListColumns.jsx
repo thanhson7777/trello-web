@@ -7,14 +7,25 @@ import Button from '@mui/material/Button'
 import CloseIcon from '@mui/icons-material/Close'
 import NoteAddIcon from '@mui/icons-material/NoteAdd'
 import { SortableContext, horizontalListSortingStrategy } from '@dnd-kit/sortable'
+import { createNewColumnAPI } from '~/apis'
+import { generatePlaceholderCard } from '~/utils/formatters'
+import { cloneDeep } from 'lodash'
+import {
+  updateActiveCurrentBoard,
+  selectCurrentActiveBoard
+} from '~/redux/activeBoard/activeBoardSlice'
+import { useDispatch, useSelector } from 'react-redux'
 
 
-function ListColumns({ columns, createNewColumn, createNewCard, deleteColumnDetails }) {
+function ListColumns({ columns }) {
+  const board = useSelector(selectCurrentActiveBoard)
+  const dispatch = useDispatch()
+
   const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
   const toggleOpenNewColumnForm = () => setOpenNewColumnForm(!openNewColumnForm)
 
   const [newColumnTitle, setNewColumnTitle] = useState('')
-  const addNewColumn = () => {
+  const addNewColumn = async () => {
     if (!newColumnTitle) {
       toast.error('Please enter column title')
       return
@@ -26,7 +37,30 @@ function ListColumns({ columns, createNewColumn, createNewCard, deleteColumnDeta
       title: newColumnTitle
     }
 
-    createNewColumn(newColumnData)
+    // Gọi API mới column và làm lại dữ liệu State board
+    const createdColumn = await createNewColumnAPI({
+      ...newColumnData,
+      boardId: board._id
+    })
+
+    // Xử lí khi column mới tạo không thể kéo card vào
+    createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+    createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
+
+    // LỖI: object is not extensible, dù đã coppy/clone ra giá trị newBoard nhưng bản chất của spread operator shallow coppy/clone, nên gặp rules Immutability trong Redux Toolkit không được dùng hàm push (sửa giá trị trực tiếp của mảng), nên phải dùng deep coppy/clone
+    // Cập nhật Sate board
+    // CÁCH 1
+    const newBoard = cloneDeep(board)
+    newBoard.columns.push(createdColumn)
+    newBoard.columnOrderIds.push(createdColumn._id)
+
+    // CÁCH 2: dùng array.concat, concat ghép các mảng lại và tạo ra một mảng mới dùng để gán giá trị lại
+    // const newBoard = { ...board }
+    // newBoard.columns = newBoard.columns.concat([createdColumn])
+    // newBoard.columnOrderIds = newBoard.columnOrderIds.concat([createdColumn._id])
+
+    // Cập nhật dữ liệu vào trong Redux Store
+    dispatch(updateActiveCurrentBoard(newBoard))
 
     // Đóng trạng thái thêm column mới và clear input
     toggleOpenNewColumnForm()
@@ -50,8 +84,6 @@ function ListColumns({ columns, createNewColumn, createNewCard, deleteColumnDeta
         {columns?.map(column => <Column
           key={column._id}
           column={column}
-          createNewCard={createNewCard}
-          deleteColumnDetails={deleteColumnDetails}
         />)}
 
         {/* Box add new column */}
