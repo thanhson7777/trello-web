@@ -20,18 +20,20 @@ import {
 } from '~/apis'
 import { cloneDeep } from 'lodash'
 import { useDispatch, useSelector } from 'react-redux'
+import { useParams } from 'react-router-dom'
 
 function Board() {
   const dispatch = useDispatch()
   // Bỏ State của component, dùng State của Redux
   // const [board, setBoard] = useState(null)
   const board = useSelector(selectCurrentActiveBoard)
+
+  const { boardId } = useParams()
+
   useEffect(() => {
-    // fix cứng
-    const boardId = '695cdc644d31db131a8fd200'
     // Gọi api
     dispatch(fetchBoardDetailsAPI(boardId))
-  }, [dispatch])
+  }, [dispatch, boardId])
 
   // Gọi API và xử lí khi hoàn thành kéo thả column
   const moveColumns = (dndOrderedColumn) => {
