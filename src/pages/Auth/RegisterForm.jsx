@@ -40,7 +40,7 @@ function RegisterForm() {
             <Avatar sx={{ bgcolor: 'primary.main' }}><TrelloIcon /></Avatar>
           </Box>
           <Box sx={{ marginTop: '1em', display: 'flex', justifyContent: 'center', color: theme => theme.palette.grey[500] }}>
-            Author: TrungQuanDev
+            Author: Thanh Sơn
           </Box>
           <Box sx={{ padding: '0 1em 1em 1em' }}>
             <Box sx={{ marginTop: '1em' }}>
@@ -98,6 +98,7 @@ function RegisterForm() {
           </Box>
           <CardActions sx={{ padding: '0 1em 1em 1em' }}>
             <Button
+              className="interceptor-loading"
               type="submit"
               variant="contained"
               color="primary"

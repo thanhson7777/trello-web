@@ -42,7 +42,7 @@ function LoginForm() {
             <Avatar sx={{ bgcolor: 'primary.main' }}><TrelloIcon /></Avatar>
           </Box>
           <Box sx={{ marginTop: '1em', display: 'flex', justifyContent: 'center', color: theme => theme.palette.grey[500] }}>
-            Author: TrungQuanDev
+            Author: Thanh Sơn
           </Box>
           <Box sx={{ marginTop: '1em', display: 'flex', justifyContent: 'center', flexDirection: 'column', padding: '0 1em' }}>
             {/* <Alert severity="success" sx={{ '.MuiAlert-message': { overflow: 'hidden' } }}>
@@ -98,6 +98,7 @@ function LoginForm() {
           </Box>
           <CardActions sx={{ padding: '0 1em 1em 1em' }}>
             <Button
+              className="interceptor-loading"
               type="submit"
               variant="contained"
               color="primary"
