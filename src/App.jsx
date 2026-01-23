@@ -1,9 +1,19 @@
 import Board from '~/pages/Boards/_id'
-import { Routes, Route, Navigate } from 'react-router-dom'
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom'
 import NotFound from '~/pages/404/NotFound'
 import Auth from '~/pages/Auth/Auth'
 import AccountVerifycation from '~/pages/Auth/AccountVerifycation'
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '~/redux/user/userSlice'
+
+
+const ProtectedRoute = ({ user }) => {
+  if (!user) return <Navigate to='/login' replace={true} />
+  return <Outlet />
+}
+
 function App() {
+  const currentUser = useSelector(selectCurrentUser)
 
   return (
     <Routes>
@@ -12,9 +22,12 @@ function App() {
         // replace là thay thế '/' thành "boards/695cdc644d31db131a8fd200"
         <Navigate to="boards/695cdc644d31db131a8fd200" replace={true} />
       } />
-
-      {/* Board detail */}
-      <Route path='/boards/:boardId' element={<Board />} />
+      {/* Route chỉ cho phép khi đã login */}
+      <Route element={<ProtectedRoute user={currentUser} />}>
+        {/* <Outlet /> để hiện thị các route con và sẽ chạy trong các route con trong này */}
+        {/* Board detail */}
+        <Route path='/boards/:boardId' element={<Board />} />
+      </Route>
 
       {/* Authentication */}
       <Route path='/login' element={<Auth />} />
