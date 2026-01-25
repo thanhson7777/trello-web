@@ -6,6 +6,7 @@ import AccountVerifycation from '~/pages/Auth/AccountVerifycation'
 import { useSelector } from 'react-redux'
 import { selectCurrentUser } from '~/redux/user/userSlice'
 import Settings from './pages/Settings/Settings'
+import Boards from './pages/Boards'
 
 const ProtectedRoute = ({ user }) => {
   if (!user) return <Navigate to='/login' replace={true} />
@@ -27,6 +28,7 @@ function App() {
         {/* <Outlet /> để hiện thị các route con và sẽ chạy trong các route con trong này */}
         {/* Board detail */}
         <Route path='/boards/:boardId' element={<Board />} />
+        <Route path='/boards' element={<Boards />} />
 
         {/* User Setting */}
         <Route path='/settings/account' element={<Settings />} />
