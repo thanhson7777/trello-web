@@ -13,7 +13,7 @@ import HomeIcon from '@mui/icons-material/Home'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
+// import CardMedia from '@mui/material/CardMedia'
 import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import { Link, useLocation } from 'react-router-dom'
@@ -58,6 +58,11 @@ function Boards() {
    */
   const page = parseInt(query.get('page') || '1', 10)
 
+  const updateStateData = (res) => {
+    setBoards(res.boards || [])
+    setTotalBoards(res.totalBoards || 0)
+  }
+
   useEffect(() => {
     // Fake tạm 16 cái item thay cho boards
     // setBoards([...Array(16)].map((_, i) => i))
@@ -69,11 +74,13 @@ function Boards() {
     // console.log('location.search', location.search)
 
     // Gọi API lấy danh sách boards
-    fetchBoardAPI(location.search).then(res => {
-      setBoards(res.boards || [])
-      setTotalBoards(res.totalBoards || 0)
-    })
+    fetchBoardAPI(location.search).then(updateStateData)
   }, [location.search])
+
+  const afterCreateNewBoard = () => {
+    // fetch lại danh sách
+    fetchBoardAPI(location.search).then(updateStateData)
+  }
 
   // Lúc chưa tồn tại boards > đang chờ gọi api thì hiện loading
   if (!boards) {
@@ -102,7 +109,7 @@ function Boards() {
             </Stack>
             <Divider sx={{ my: 1 }} />
             <Stack direction="column" spacing={1}>
-              <SidebarCreateBoardModal />
+              <SidebarCreateBoardModal afterCreateNewBoard={afterCreateNewBoard} />
             </Stack>
           </Grid>
 
