@@ -19,6 +19,8 @@ import PaginationItem from '@mui/material/PaginationItem'
 import { Link, useLocation } from 'react-router-dom'
 import randomColor from 'randomcolor'
 import SidebarCreateBoardModal from './create'
+import { fetchBoardAPI } from '~/apis'
+import { DEFAULT_PAGE, DEFAULT_ITEM_PER_PAGE } from '~/utils/constants'
 
 import { styled } from '@mui/material/styles'
 // Styles của mấy cái Sidebar item menu
@@ -58,13 +60,20 @@ function Boards() {
 
   useEffect(() => {
     // Fake tạm 16 cái item thay cho boards
-    setBoards([...Array(16)].map((_, i) => i))
+    // setBoards([...Array(16)].map((_, i) => i))
     // Fake tạm giả sử trong Database trả về có tổng 100 bản ghi boards
-    setTotalBoards(100)
+    // setTotalBoards(100)
 
-    // Gọi API lấy danh sách boards ở đây...
-    // ...
-  }, [])
+    // Mỗi khi thay đổi url , thì localtion.search cũng thay đổi (useEffect sẽ fetch lại api theo đúng location.search của page mới vì location.search đã có trong dependenies của useEffect)
+
+    // console.log('location.search', location.search)
+
+    // Gọi API lấy danh sách boards
+    fetchBoardAPI(location.search).then(res => {
+      setBoards(res.boards || [])
+      setTotalBoards(res.totalBoards || 0)
+    })
+  }, [location.search])
 
   // Lúc chưa tồn tại boards > đang chờ gọi api thì hiện loading
   if (!boards) {
@@ -109,7 +118,7 @@ function Boards() {
             {boards?.length > 0 &&
               <Grid container spacing={2}>
                 {boards.map(b =>
-                  <Grid xs={2} sm={3} md={4} key={b}>
+                  <Grid xs={2} sm={3} md={4} key={b._id}>
                     <Card sx={{ width: '250px' }}>
                       {/* Ý tưởng mở rộng về sau làm ảnh Cover cho board nhé */}
                       {/* <CardMedia component="img" height="100" image="https://picsum.photos/100" /> */}
@@ -117,17 +126,17 @@ function Boards() {
 
                       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
                         <Typography gutterBottom variant="h6" component="div">
-                          Board title
+                          {b?.title}
                         </Typography>
                         <Typography
                           variant="body2"
                           color="text.secondary"
                           sx={{ overflow: 'hidden', whiteSpace: 'nowrap', textOverflow: 'ellipsis' }}>
-                          This impressive paella is a perfect party dish and a fun meal to cook together with your guests. Add 1 cup of frozen peas along with the mussels, if you like.
+                          {b?.description}
                         </Typography>
                         <Box
                           component={Link}
-                          to={'/boards/6534e1b8a235025a66b644a5'}
+                          to={`/boards/${b?._id}`}
                           sx={{
                             mt: 1,
                             display: 'flex',
@@ -154,14 +163,14 @@ function Boards() {
                   showFirstButton
                   showLastButton
                   // Giá trị prop count của component Pagination là để hiển thị tổng số lượng page, công thức là lấy Tổng số lượng bản ghi chia cho số lượng bản ghi muốn hiển thị trên 1 page (ví dụ thường để 12, 24, 26, 48...vv). sau cùng là làm tròn số lên bằng hàm Math.ceil
-                  count={Math.ceil(totalBoards / 12)}
+                  count={Math.ceil(totalBoards / DEFAULT_ITEM_PER_PAGE)}
                   // Giá trị của page hiện tại đang đứng
                   page={page}
                   // Render các page item và đồng thời cũng là những cái link để chúng ta click chuyển trang
                   renderItem={(item) => (
                     <PaginationItem
                       component={Link}
-                      to={`/boards${item.page === 1 ? '' : `?page=${item.page}`}`}
+                      to={`/boards${item.page === DEFAULT_PAGE ? '' : `?page=${item.page}`}`}
                       {...item}
                     />
                   )}

@@ -13,3 +13,6 @@ if (process.env.BUILD_MODE === 'production') {
 // console.log('🚀 ~ apiRoot:', apiRoot)
 export const API_ROOT = apiRoot
 // export const API_ROOT = 'https://trello-api-zi88.onrender.com'
+
+export const DEFAULT_PAGE = 1
+export const DEFAULT_ITEM_PER_PAGE = 12
