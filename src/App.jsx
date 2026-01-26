@@ -21,7 +21,7 @@ function App() {
       {/* Redirect route */}
       <Route path='/' element={
         // replace là thay thế '/' thành "boards/695cdc644d31db131a8fd200"
-        <Navigate to="boards/695cdc644d31db131a8fd200" replace={true} />
+        <Navigate to="boards" replace={true} />
       } />
       {/* Route chỉ cho phép khi đã login */}
       <Route element={<ProtectedRoute user={currentUser} />}>
