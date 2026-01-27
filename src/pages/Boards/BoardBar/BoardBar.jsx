@@ -5,12 +5,11 @@ import VpnLockIcon from '@mui/icons-material/VpnLock'
 import AddToDriveIcon from '@mui/icons-material/AddToDrive'
 import BoltIcon from '@mui/icons-material/Bolt'
 import FilterListIcon from '@mui/icons-material/FilterList'
-import AvatarGroup from '@mui/material/AvatarGroup'
-import Avatar from '@mui/material/Avatar'
 import Tooltip from '@mui/material/Tooltip'
 import Button from '@mui/material/Button'
 import PersonAddIcon from '@mui/icons-material/PersonAdd'
 import { capitalizeFirstLetter } from '~/utils/formatters'
+import BoardUserGroup from './BoardUserGroup'
 
 const CHIP_STYLE = {
   color: 'white',
@@ -86,76 +85,9 @@ function BoardBar({ board }) { //Nhận vào object destructuring đã được 
         >
           Invite
         </Button>
-        <AvatarGroup
-          max={5}
-          sx={{
-            gap: '10px',
-            '& .MuiAvatar-root': {
-              width: 34,
-              height: 34,
-              fontSize: 16,
-              border: 'none',
-              color: 'white',
-              cursor: 'pointer',
-              '&:first-of-type': { bgcolor: '#a4b0be' }
-            }
-          }}
-        >
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-          <Tooltip title="thanhson">
-            <Avatar
-              alt="son"
-              src='https://tse4.mm.bing.net/th/id/OIP.Xwd8n__tBgMlaCd5zTKILgHaCx?pid=Api&P=0&h=220'
-            />
-          </Tooltip>
-        </AvatarGroup>
+
+        {/* Hiển thị danh sách thành viên của board */}
+        <BoardUserGroup />
       </Box>
     </Box>
   )
