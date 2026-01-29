@@ -87,7 +87,7 @@ function BoardBar({ board }) { //Nhận vào object destructuring đã được 
         </Button>
 
         {/* Hiển thị danh sách thành viên của board */}
-        <BoardUserGroup />
+        <BoardUserGroup boardUsers={board?.FE_allUsers} />
       </Box>
     </Box>
   )
