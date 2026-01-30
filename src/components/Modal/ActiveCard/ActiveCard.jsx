@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
 import Typography from '@mui/material/Typography'
@@ -35,8 +34,9 @@ import CardActivitySection from './CardActivitySection'
 import { useDispatch, useSelector } from 'react-redux'
 import {
   updateCurrentActiveCard,
-  clearCurrentActiveCard,
-  selectCurrentActiveCard
+  clearAndHideCurrentActiveCard,
+  selectCurrentActiveCard,
+  selectIShowModalActiveCard
 } from '~/redux/acitveCard/activeCardSlice'
 import { styled } from '@mui/material/styles'
 import { updateCardDetailAPI } from '~/apis'
@@ -69,6 +69,7 @@ function ActiveCard() {
 
   const dispatch = useDispatch()
   const activeCard = useSelector(selectCurrentActiveCard)
+  const isShowModalActiveCard = useSelector(selectIShowModalActiveCard)
 
   // Không dùng biến state để check modal nữa (vì check bên _id)
 
@@ -76,7 +77,7 @@ function ActiveCard() {
   // const handleOpenModal = () => setIsOpen(true)
   const handleCloseModal = () => {
     // setIsOpen(false)
-    dispatch(clearCurrentActiveCard())
+    dispatch(clearAndHideCurrentActiveCard())
   }
 
   // update card title, description, comment, cover,...
@@ -99,7 +100,7 @@ function ActiveCard() {
   }
 
   const onUploadCardCover = (event) => {
-    console.log(event.target?.files[0])
+    // console.log(event.target?.files[0])
     const error = singleFileValidator(event.target?.files[0])
     if (error) {
       toast.error(error)
@@ -115,10 +116,14 @@ function ActiveCard() {
     )
   }
 
+  // Thêm async để chờ component thực hiện add comment thành công thì clear input
+  const onAddCardComment = async (commentToAdd) => {
+    await callApiUpdateCard({ commentToAdd })
+  }
   return (
     <Modal
       disableScrollLock
-      open={true}
+      open={isShowModalActiveCard}
       onClose={handleCloseModal} // Sử dụng onClose trong trường hợp muốn đóng Modal bằng nút ESC hoặc click ra ngoài Modal
       sx={{ overflowY: 'auto' }}>
       <Box sx={{
@@ -193,7 +198,10 @@ function ActiveCard() {
               </Box>
 
               {/* Feature 04: Xử lý các hành động, ví dụ comment vào Card */}
-              <CardActivitySection />
+              <CardActivitySection
+                cardComments={activeCard?.comments}
+                onAddCardComment={onAddCardComment}
+              />
             </Box>
           </Grid>
 
