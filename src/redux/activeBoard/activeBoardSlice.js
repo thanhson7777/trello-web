@@ -10,7 +10,7 @@ const initialState = {
   currentActiveBoard: null
 }
 
-// Các hành động gọi api (bất đồng bộ) và cập nhật dữ liệu vào redux, dùng Middleware create asyncThunk đi kèm với
+// Các hành động gọi api (bất đồng bộ) và cập nhật dữ liệu vào redux, dùng Middleware create asyncThunk đi kèm với extraReducers
 export const fetchBoardDetailsAPI = createAsyncThunk(
   'activeBoard/fetchBoardDetailsAPI',
   async (boardId) => {
