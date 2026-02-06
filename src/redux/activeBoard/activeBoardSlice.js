@@ -63,7 +63,10 @@ export const activeBoardSlice = createSlice({
       let board = action.payload
 
       // Thành viên trong board sẽ được gộp từ 2 mảng (owners, members)
-      board.FE_allUsers = board.owners.concat(board.members)
+      const tempUsers = board.owners.concat(board.members)
+
+      // Lọc trùng dựa trên _id
+      board.FE_allUsers = [...new Map(tempUsers.map(user => [user._id, user])).values()]
 
       // Xử lý dữ liệu (nếu cần)
       // Sắp xếp dữ liệu  thứ tự các colum trước khi đưa xuống bên dưới
