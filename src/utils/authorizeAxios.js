@@ -32,7 +32,7 @@ authorizeAxiosInstance.interceptors.request.use((config) => {
 let refreshTokenPromise = null
 
 
-// Interceptors request là can thiện vào những respone nhận về
+// Interceptors respone là can thiện vào những respone nhận về
 authorizeAxiosInstance.interceptors.response.use((response) => {
   // Dùng kỹ thuât chặn spam click
   interceptorLoadingElements(false)

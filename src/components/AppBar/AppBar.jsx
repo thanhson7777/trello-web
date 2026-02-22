@@ -43,7 +43,7 @@ function AppBar() {
             <Typography variant='span' sx={{ fontSize: '1.2rem', fontWeight: 'bold', color: 'white' }}>Workban</Typography>
           </Box>
         </Link>
-        <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
+        {/* <Box sx={{ display: { xs: 'none', md: 'flex' }, gap: 1 }}>
           <Workspaces />
           <Recent />
           <Starred />
@@ -58,7 +58,7 @@ function AppBar() {
             startIcon={<LibraryAddIcon />}
           >
             Create</Button>
-        </Box>
+        </Box> */}
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         {/* Tìm kiếm nhanh các board */}
