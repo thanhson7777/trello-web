@@ -1,3 +1,4 @@
+import { teal, deepOrange, cyan, orange } from '@mui/material/colors'
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles'
 // import { cyan, deepOrange, orange, teal } from '@mui/material/colors'
 
@@ -15,20 +16,20 @@ const theme = extendTheme({
     columnHeaderHeight: COLUMN_HEADER_HEIGHT,
     columFooterHeight: COLUMN_FOOTER_HEIGHT
   },
-  // colorSchemes: {
-  //   light: {
-  //     palette: {
-  //       primary: teal,
-  //       secondary: deepOrange
-  //     }
-  //   },
-  //   dark: {
-  //     palette: {
-  //       primary: cyan,
-  //       secondary: orange
-  //     }
-  //   }
-  // },
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: teal,
+        secondary: deepOrange
+      }
+    },
+    dark: {
+      palette: {
+        primary: cyan,
+        secondary: orange
+      }
+    }
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {

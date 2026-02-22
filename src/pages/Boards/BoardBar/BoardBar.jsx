@@ -35,7 +35,7 @@ function BoardBar({ board }) { //Nhận vào object destructuring đã được 
       gap: 2,
       overflowX: 'auto',
       paddingX: 2,
-      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#1976d2'),
+      bgcolor: (theme) => (theme.palette.mode === 'dark' ? '#34495e' : '#38D5BE'),
       '&::-webkit-scrollbar-track': { m: 2 }
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
